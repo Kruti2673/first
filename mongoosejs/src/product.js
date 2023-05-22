@@ -1,24 +1,67 @@
+const path = require("path");
+const express = require("express");
+const app = express();
+const port = 3000;
+
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://127.0.0.1:27017/test");
+mongoose.connect("mongodb://127.0.0.1:27017/test").then(() => {
+  app.listen(port, () => {});
+});
 
-import mongoose from "mongoose";
-const { Schema } = mongoose;
+const staticPath = path.join(__dirname, "../public");
+app.use(express.static(staticPath));
 
-const Product = new Schema({
+const productSchema = new mongoose.Schema({
   name: String,
-  price: String,
+  price: Number,
   color: String,
-  quantity: String,
+  quantity: Number,
   storename: String,
 });
 
-const pro = mongoose.model("pro", Product);
+const Product = new mongoose.model("Product", productSchema);
 
-const prodct1 = new roduct(
-  { name: "pen" },
-  { price: "700.0" },
-  { color: "red" },
-  { quantity: "5" },
-  { storename: "atul" }
-);
+//create operation
+const prodct1 = new Product({
+  name: "shoes",
+  price: 4500.0,
+  color: "classy blue",
+  quantity: 3,
+  storename: "Zudio",
+});
 prodct1.save().then(() => console.log("product updated"));
+
+//display all
+app.get("/", async (req, res) => {
+  const data = await Product.find({});
+  console.log("data:", data);
+  return res.send({ status: true, data });
+});
+
+//find(Retrieve) operation
+app.get("/find", async (req, res) => {
+  const data = await Product.find({ name: "pen" });
+  console.log("data:", data);
+  return res.send({ status: true, data });
+});
+
+//Update operation
+app.get("/update", async (req, res) => {
+  const data = await Product.updateOne({ name: "laptop" }, { name: "activa" });
+  console.log("data:", data);
+  return res.send({ status: true, data });
+});
+
+//Delete operation
+app.get("/delete", async (req, res) => {
+  const data = await Product.deleteOne({ name: "shoes" });
+  console.log("data:", data);
+  return res.send({ status: true, data });
+});
+
+//count
+app.get("/count", async (req, res) => {
+  const data = await Product.countDocuments({});
+  console.log("data:", data);
+  return res.send({ status: true, data });
+});
