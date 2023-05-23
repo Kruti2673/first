@@ -3,6 +3,8 @@ const express = require("express");
 const app = express();
 const port = 3000;
 
+app.use(express.json());
+
 const mongoose = require("mongoose");
 mongoose.connect("mongodb://127.0.0.1:27017/test").then(() => {
   app.listen(port, () => {});
@@ -40,10 +42,9 @@ app.get("/", async (req, res) => {
 
 //find(Retrieve) operation
 //post
-app.post("/find", async (req, res) => {
-  // const data = await Product.find({ name: "pen" });
-  // console.log("data:", data);
-  let data = req.body;
+app.get("/find", async (req, res) => {
+  const data = await Product.find({ name: "pen" });
+  console.log("data:", data);
   return res.send({ name: "pen" });
 });
 
