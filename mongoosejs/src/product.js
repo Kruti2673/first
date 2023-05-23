@@ -39,13 +39,16 @@ app.get("/", async (req, res) => {
 });
 
 //find(Retrieve) operation
-app.get("/find", async (req, res) => {
-  const data = await Product.find({ name: "pen" });
-  console.log("data:", data);
-  return res.send({ status: true, data });
+//post
+app.post("/find", async (req, res) => {
+  // const data = await Product.find({ name: "pen" });
+  // console.log("data:", data);
+  let data = req.body;
+  return res.send({ name: "pen" });
 });
 
 //Update operation
+//app.put
 app.get("/update", async (req, res) => {
   const data = await Product.updateOne({ name: "laptop" }, { name: "activa" });
   console.log("data:", data);
@@ -53,6 +56,7 @@ app.get("/update", async (req, res) => {
 });
 
 //Delete operation
+//app.delete
 app.get("/delete", async (req, res) => {
   const data = await Product.deleteOne({ name: "shoes" });
   console.log("data:", data);
