@@ -24,14 +24,14 @@ const productSchema = new mongoose.Schema({
 const Product = new mongoose.model("Product", productSchema);
 
 //create operation
-const prodct1 = new Product({
-  name: "shoes",
-  price: 4500.0,
-  color: "classy blue",
-  quantity: 3,
-  storename: "Zudio",
-});
-prodct1.save().then(() => console.log("product updated"));
+// const prodct1 = new Product({
+//   name: "shoes",
+//   price: 4500.0,
+//   color: "classy blue",
+//   quantity: 3,
+//   storename: "Zudio",
+// });
+//prodct1.save().then(() => console.log("product updated"));
 
 //display all
 app.get("/", async (req, res) => {
